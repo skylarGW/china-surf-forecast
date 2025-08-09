@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国冲浪预测 V5.0 - 中国数据校准版</title>
+    <link rel="stylesheet" href="styles-v3.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1>🏄♂️ 中国冲浪预测 V5.0</h1>
+            <p>中国官方数据校准 · 专业预测分析 · 24小时详细预测</p>
+            <div class="beta-notice">🇨🇳 集成中国权威海洋数据校准，预测更准确</div>
+            
+            <!-- 数据源状态 -->
+            <div class="data-source-status" id="dataSourceStatus">
+                <span id="dataSourceIndicator">📊 模拟数据模式</span>
+                <button class="config-btn" onclick="openConfig()">⚙️ API配置</button>
+                <button class="config-btn" onclick="toggleCalibration()" id="calibrationBtn">🇨🇳 校准开启</button>
+            </div>
+        </header>
+
+        <!-- 校准状态面板 -->
+        <section class="calibration-panel" id="calibrationPanel">
+            <h3>🇨🇳 中国数据校准状态</h3>
+            <div id="calibrationStatus" class="calibration-content">
+                <div class="loading">正在检查校准状态...</div>
+            </div>
+        </section>
+
+        <!-- 全国TOP3 AI推荐面板 -->
+        <section class="ai-recommendation">
+            <h2>🏆 全国TOP3浪点推荐</h2>
+            <div id="globalAiAnalysis" class="ai-content">
+                <div class="loading">正在分析全国最佳冲浪条件...</div>
+            </div>
+        </section>
+
+        <!-- 地区选择 -->
+        <nav class="region-nav">
+            <button class="region-btn active" data-region="all">全部浪点</button>
+            <button class="region-btn" data-region="zhoushan">舟山群岛</button>
+            <button class="region-btn" data-region="qingdao">青岛海岸</button>
+        </nav>
+
+        <!-- 日期选择 -->
+        <div class="date-selector">
+            <div id="dateButtons" class="date-buttons"></div>
+        </div>
+
+        <!-- 浪点展示区域 -->
+        <main class="spots-container">
+            <div id="spotsGrid" class="spots-grid"></div>
+        </main>
+
+        <!-- 详细信息模态框 -->
+        <div id="detailModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config-v2.js"></script>
+    <script src="realAPI-service-v2.js"></script>
+    <script src="dataService-hybrid.js"></script>
+    <script src="china-marine-scraper.js"></script>
+    <script src="dataService-china-calibrated.js"></script>
+    <script src="aiAnalyzer-v3.js"></script>
+    <script src="app-v5.js"></script>
+</body>
+</html>

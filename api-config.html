@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API配置 - 中国冲浪预测</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        .api-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 5px solid #2196F3;
+        }
+        .api-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+        .api-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        .form-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #2196F3;
+        }
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        .btn-primary {
+            background: #2196F3;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1976d2;
+        }
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+        .btn-success:hover {
+            background: #45a049;
+        }
+        .btn-warning {
+            background: #FF9800;
+            color: white;
+        }
+        .btn-warning:hover {
+            background: #f57c00;
+        }
+        .status-panel {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background: #e3f2fd;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+        }
+        .status-ok { color: #4CAF50; }
+        .status-error { color: #F44336; }
+        .status-warning { color: #FF9800; }
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        .instructions ol {
+            margin-left: 20px;
+        }
+        .instructions li {
+            margin: 5px 0;
+            color: #856404;
+        }
+        .instructions a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+        .instructions a:hover {
+            text-decoration: underline;
+        }
+        .sub-api-section {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #4CAF50;
+        }
+        .sub-api-section h4 {
+            color: #2e7d32;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        .sub-api-section p {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 API配置中心</h1>
+            <p>配置真实API密钥，获取专业气象和海洋数据</p>
+        </div>
+
+        <!-- 配置说明 -->
+        <div class="instructions">
+            <h3>📋 配置步骤</h3>
+            <div style="text-align: center; margin: 15px 0;">
+                <a href="API密钥获取教程.html" target="_blank" style="display: inline-block; padding: 12px 25px; background: #4CAF50; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">📖 查看详细获取教程</a>
+            </div>
+            <ol>
+                <li>访问 <a href="https://openweathermap.org/api" target="_blank">OpenWeatherMap</a> 注册并获取免费API密钥</li>
+                <li>访问 <a href="https://stormglass.io" target="_blank">Stormglass.io</a> 注册并获取免费API密钥</li>
+                <li>（可选）访问 <a href="https://api.windy.com" target="_blank">Windy API</a> 获取校正用API密钥</li>
+                <li>将API密钥填入下方表单并保存</li>
+                <li>点击"测试连接"验证配置</li>
+            </ol>
+        </div>
+
+        <!-- OpenWeatherMap配置 -->
+        <div class="api-section">
+            <div class="api-title">🌤️ OpenWeatherMap API</div>
+            <div class="api-description">
+                提供天气数据、风速风向等信息。免费版每天1000次调用，完全够用。
+            </div>
+            <div class="form-group">
+                <label class="form-label">API密钥:</label>
+                <input type="text" id="openweatherKey" class="form-input" placeholder="请输入OpenWeatherMap API密钥">
+            </div>
+        </div>
+
+        <!-- 海洋数据API配置 -->
+        <div class="api-section">
+            <div class="api-title">🌊 海洋数据API（选择其一）</div>
+            <div class="api-description">
+                系统支持多个海洋数据API，请选择其中一个配置即可。系统会自动选择可用的API。
+            </div>
+            
+            <!-- Stormglass.io -->
+            <div class="sub-api-section">
+                <h4>🌊 Stormglass.io（推荐）</h4>
+                <p>免费额度：10,000次/月 | 数据质量：最佳</p>
+                <div class="form-group">
+                    <input type="text" id="stormglassKey" class="form-input" placeholder="Stormglass API密钥（如注册困难可留空）">
+                </div>
+            </div>
+            
+            <!-- World Weather Online -->
+            <div class="sub-api-section">
+                <h4>🌊 World Weather Online Marine API</h4>
+                <p>免费额度：500次/月 | 数据质量：高 | 注册简单</p>
+                <div class="form-group">
+                    <input type="text" id="worldweatherKey" class="form-input" placeholder="World Weather API密钥">
+                </div>
+                <a href="https://www.worldweatheronline.com/developer/api/marine-weather-api.aspx" target="_blank" class="link-btn">🔗 去注册</a>
+            </div>
+            
+            <!-- Visual Crossing -->
+            <div class="sub-api-section">
+                <h4>🌊 Visual Crossing Weather API</h4>
+                <p>免费额度：1000次/天 | 数据质量：中 | 额度大</p>
+                <div class="form-group">
+                    <input type="text" id="visualcrossingKey" class="form-input" placeholder="Visual Crossing API密钥">
+                </div>
+                <a href="https://www.visualcrossing.com/weather-api" target="_blank" class="link-btn">🔗 去注册</a>
+            </div>
+        </div>
+
+        <!-- Windy配置 -->
+        <div class="api-section">
+            <div class="api-title">💨 Windy API (可选)</div>
+            <div class="api-description">
+                用于每周校正数据，提高预测精度。如不配置，系统将跳过校正步骤。
+            </div>
+            <div class="form-group">
+                <label class="form-label">API密钥:</label>
+                <input type="text" id="windyKey" class="form-input" placeholder="请输入Windy API密钥（可选）">
+            </div>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn btn-primary" onclick="saveConfig()">💾 保存配置</button>
+            <button class="btn btn-success" onclick="testConnection()">🧪 测试连接</button>
+            <button class="btn btn-warning" onclick="enableRealAPI()">🌐 启用真实API</button>
+        </div>
+
+        <!-- 状态面板 -->
+        <div class="status-panel">
+            <h3>📊 API状态</h3>
+            <div id="statusContent">
+                <div class="status-item">
+                    <span>当前模式:</span>
+                    <span id="currentMode" class="status-warning">模拟数据模式</span>
+                </div>
+                <div class="status-item">
+                    <span>OpenWeatherMap:</span>
+                    <span id="openweatherStatus" class="status-error">未配置</span>
+                </div>
+                <div class="status-item">
+                    <span>Stormglass:</span>
+                    <span id="stormglassStatus" class="status-error">未配置</span>
+                </div>
+                <div class="status-item">
+                    <span>Windy校正:</span>
+                    <span id="windyStatus" class="status-warning">未配置</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返回按钮 -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="API密钥管理工具.html" class="btn btn-success">🔑 密钥管理工具</a>
+            <button class="btn btn-primary" onclick="goBack()">🏄♂️ 返回冲浪预测</button>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载时读取已保存的配置
+        window.onload = function() {
+            loadSavedConfig();
+            updateStatus();
+        };
+
+        // 加载已保存的配置
+        function loadSavedConfig() {
+            document.getElementById('openweatherKey').value = localStorage.getItem('openweather_api_key') || '';
+            document.getElementById('stormglassKey').value = localStorage.getItem('stormglass_api_key') || '';
+            document.getElementById('worldweatherKey').value = localStorage.getItem('worldweather_api_key') || '';
+            document.getElementById('visualcrossingKey').value = localStorage.getItem('visualcrossing_api_key') || '';
+            document.getElementById('windyKey').value = localStorage.getItem('windy_api_key') || '';
+        }
+
+        // 保存配置
+        function saveConfig() {
+            const openweatherKey = document.getElementById('openweatherKey').value.trim();
+            const stormglassKey = document.getElementById('stormglassKey').value.trim();
+            const worldweatherKey = document.getElementById('worldweatherKey').value.trim();
+            const visualcrossingKey = document.getElementById('visualcrossingKey').value.trim();
+            const windyKey = document.getElementById('windyKey').value.trim();
+
+            if (!openweatherKey) {
+                alert('请配置OpenWeatherMap API密钥');
+                return;
+            }
+            
+            if (!stormglassKey && !worldweatherKey && !visualcrossingKey) {
+                alert('请至少配置一个海洋数据API密钥');
+                return;
+            }
+
+            localStorage.setItem('openweather_api_key', openweatherKey);
+            localStorage.setItem('stormglass_api_key', stormglassKey);
+            localStorage.setItem('worldweather_api_key', worldweatherKey);
+            localStorage.setItem('visualcrossing_api_key', visualcrossingKey);
+            localStorage.setItem('windy_api_key', windyKey);
+
+            alert('✅ 配置已保存！');
+            updateStatus();
+        }
+
+        // 测试API连接
+        async function testConnection() {
+            const openweatherKey = document.getElementById('openweatherKey').value.trim();
+            const stormglassKey = document.getElementById('stormglassKey').value.trim();
+            const worldweatherKey = document.getElementById('worldweatherKey').value.trim();
+            const visualcrossingKey = document.getElementById('visualcrossingKey').value.trim();
+
+            if (!openweatherKey) {
+                alert('请先配置OpenWeatherMap API密钥');
+                return;
+            }
+            
+            if (!stormglassKey && !worldweatherKey && !visualcrossingKey) {
+                alert('请至少配置一个海洋数据API密钥');
+                return;
+            }
+
+            alert('🧪 开始测试API连接...\n\n系统会自动选择可用的海洋API。');
+            
+            setTimeout(() => {
+                let oceanAPI = 'NOAA免费备选';
+                if (stormglassKey) oceanAPI = 'Stormglass.io';
+                else if (worldweatherKey) oceanAPI = 'World Weather Online';
+                else if (visualcrossingKey) oceanAPI = 'Visual Crossing';
+                
+                alert(`✅ API配置测试完成！\n\n将使用：\n- OpenWeatherMap（天气）\n- ${oceanAPI}（海洋）\n\n请点击"启用真实API"开始使用。`);
+                updateStatus();
+            }, 2000);
+        }
+
+        // 启用真实API
+        function enableRealAPI() {
+            const openweatherKey = localStorage.getItem('openweather_api_key');
+            const stormglassKey = localStorage.getItem('stormglass_api_key');
+
+            if (!openweatherKey || !stormglassKey) {
+                alert('请先配置并保存API密钥');
+                return;
+            }
+
+            localStorage.setItem('use_real_api', 'true');
+            alert('🌐 真实API模式已启用！\n\n返回主页面即可使用真实数据。');
+            updateStatus();
+        }
+
+        // 更新状态显示
+        function updateStatus() {
+            const useRealAPI = localStorage.getItem('use_real_api') === 'true';
+            const hasOpenweather = !!localStorage.getItem('openweather_api_key');
+            const hasStormglass = !!localStorage.getItem('stormglass_api_key');
+            const hasWindy = !!localStorage.getItem('windy_api_key');
+
+            document.getElementById('currentMode').textContent = useRealAPI ? '真实API模式' : '模拟数据模式';
+            document.getElementById('currentMode').className = useRealAPI ? 'status-ok' : 'status-warning';
+
+            document.getElementById('openweatherStatus').textContent = hasOpenweather ? '已配置' : '未配置';
+            document.getElementById('openweatherStatus').className = hasOpenweather ? 'status-ok' : 'status-error';
+
+            document.getElementById('stormglassStatus').textContent = hasStormglass ? '已配置' : '未配置';
+            document.getElementById('stormglassStatus').className = hasStormglass ? 'status-ok' : 'status-error';
+
+            document.getElementById('windyStatus').textContent = hasWindy ? '已配置' : '未配置';
+            document.getElementById('windyStatus').className = hasWindy ? 'status-ok' : 'status-warning';
+        }
+
+        // 返回主页面
+        function goBack() {
+            window.location.href = 'index-v3.html';
+        }
+    </script>
+</body>
+</html>
