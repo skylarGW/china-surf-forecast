@@ -411,6 +411,8 @@ class SurfForecastAppV5 {
 function toggleCalibration() {
     if (window.app) {
         app.toggleCalibration();
+    } else {
+        console.warn('应用未初始化完成，请稍后重试');
     }
 }
 
@@ -418,8 +420,30 @@ function openConfig() {
     window.open('api-config.html', '_blank');
 }
 
-// 启动应用
-const app = new SurfForecastAppV5();
+// 等待所有脚本加载完成后启动应用
+let app;
+
+// 检查依赖是否加载完成
+function checkDependencies() {
+    if (typeof CONFIG !== 'undefined' && 
+        typeof dataService !== 'undefined' && 
+        typeof aiAnalyzer !== 'undefined' && 
+        typeof UTILS !== 'undefined') {
+        // 所有依赖已加载，启动应用
+        app = new SurfForecastAppV5();
+        console.log('✅ 应用启动成功');
+    } else {
+        // 依赖未完全加载，100ms后重试
+        setTimeout(checkDependencies, 100);
+    }
+}
+
+// 页面加载完成后开始检查依赖
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkDependencies);
+} else {
+    checkDependencies();
+}
 
 // 添加样式
 const appStyles = `
