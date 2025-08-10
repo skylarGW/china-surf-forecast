@@ -499,7 +499,7 @@ class SurfForecastAppV5 {
         ).join('');
     }
 
-    // 格式化潮汐信息卡片
+    // 格式化潮汐信息卡片 - 显示所有潮汐
     formatTideInfo(schedule) {
         if (!schedule || schedule.length === 0) {
             return '<div class="tide-info">暂无潮汐数据</div>';
@@ -511,15 +511,15 @@ class SurfForecastAppV5 {
         
         let html = '<div class="tide-summary">';
         
-        if (lowTides.length > 0) {
-            const firstLow = lowTides[0];
-            html += `<span class="tide-item low-tide">🌊 低潮: ${firstLow.time} (${firstLow.height}m)</span>`;
-        }
+        // 显示所有低潮
+        lowTides.forEach(tide => {
+            html += `<span class="tide-item low-tide">🌊 低潮: ${tide.time} (${tide.height}m)</span>`;
+        });
         
-        if (highTides.length > 0) {
-            const firstHigh = highTides[0];
-            html += `<span class="tide-item high-tide">🌊 高潮: ${firstHigh.time} (${firstHigh.height}m)</span>`;
-        }
+        // 显示所有高潮
+        highTides.forEach(tide => {
+            html += `<span class="tide-item high-tide">🌊 高潮: ${tide.time} (${tide.height}m)</span>`;
+        });
         
         html += '</div>';
         return html;
@@ -835,6 +835,8 @@ const enhancedStyles = `
     border-radius: 12px;
     font-size: 0.8em;
     white-space: nowrap;
+    margin: 2px;
+    display: inline-block;
 }
 
 .low-tide {
@@ -845,6 +847,22 @@ const enhancedStyles = `
 .high-tide {
     background: #c8e6c9;
     color: #2e7d32;
+}
+
+/* 日期选择器样式增强 */
+.date-selector {
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.date-selector-title {
+    color: #1976d2;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    text-align: center;
 }
 
 /* 底部信息样式 */
