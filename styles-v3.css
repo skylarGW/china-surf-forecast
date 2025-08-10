@@ -181,12 +181,22 @@ body {
 
 /* 日期选择器 */
 .date-selector {
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.9), rgba(42, 82, 152, 0.8));
     backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 15px;
     margin-bottom: 25px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.date-selector-title {
+    color: white;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .date-buttons {
@@ -198,24 +208,41 @@ body {
 
 .date-btn {
     padding: 10px 15px;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.9);
+    color: #1e3c72;
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     cursor: pointer;
     font-size: 14px;
     min-width: 80px;
+    font-weight: 500;
     transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.date-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .date-btn.active {
-    background: rgba(255, 255, 255, 0.9);
+    background: linear-gradient(135deg, #FFD700, #FFA500);
     color: #333;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
 }
 
 .date-btn.today {
     border: 2px solid #FFD700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
+    50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.8); }
+    100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
 }
 
 /* 浪点网格 */
