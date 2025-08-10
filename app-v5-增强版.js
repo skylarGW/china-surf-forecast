@@ -267,6 +267,9 @@ class SurfForecastAppV5 {
                     <div class="spot-condition">
                         ${suggestion.summary || '数据分析中...'}
                     </div>
+                    <div class="tide-info-card">
+                        ${this.formatTideInfo(data.hourly.tideSchedule)}
+                    </div>
                     <div class="ai-quick-tips">
                         <div class="quick-tip">🏄 ${(suggestion.equipment || ['分析中...'])[0]}</div>
                     </div>
@@ -494,6 +497,32 @@ class SurfForecastAppV5 {
         return schedule.map(tide => 
             `<div class="tide-time">${tide.time} ${tide.type} ${tide.height}m</div>`
         ).join('');
+    }
+
+    // 格式化潮汐信息卡片
+    formatTideInfo(schedule) {
+        if (!schedule || schedule.length === 0) {
+            return '<div class="tide-info">暂无潮汐数据</div>';
+        }
+        
+        // 找到低潮和高潮
+        const lowTides = schedule.filter(t => t.type === '低潮');
+        const highTides = schedule.filter(t => t.type === '高潮');
+        
+        let html = '<div class="tide-summary">';
+        
+        if (lowTides.length > 0) {
+            const firstLow = lowTides[0];
+            html += `<span class="tide-item low-tide">🌊 低潮: ${firstLow.time} (${firstLow.height}m)</span>`;
+        }
+        
+        if (highTides.length > 0) {
+            const firstHigh = highTides[0];
+            html += `<span class="tide-item high-tide">🌊 高潮: ${firstHigh.time} (${firstHigh.height}m)</span>`;
+        }
+        
+        html += '</div>';
+        return html;
     }
 }
 
@@ -784,6 +813,57 @@ const enhancedStyles = `
 .status-value.enabled {
     color: #4CAF50;
     font-weight: bold;
+}
+
+/* 潮汐信息样式 */
+.tide-info-card {
+    margin-top: 8px;
+    padding: 8px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    font-size: 0.85em;
+}
+
+.tide-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tide-item {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    white-space: nowrap;
+}
+
+.low-tide {
+    background: #ffecb3;
+    color: #f57c00;
+}
+
+.high-tide {
+    background: #c8e6c9;
+    color: #2e7d32;
+}
+
+/* 底部信息样式 */
+.footer {
+    margin-top: 40px;
+    padding: 30px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.footer-content p {
+    color: #666;
+    font-size: 0.9em;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 @media (max-width: 768px) {
